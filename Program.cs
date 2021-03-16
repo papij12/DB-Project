@@ -25,7 +25,7 @@ namespace SqlDatabase
 
             conn.Close();
 
-            // querry for dislpaying all actors starring in a movie 
+            // querry for displaying all actors starring in a movie 
             conn.Open();
          
             Console.WriteLine("\n first and last name of actors that played in all the movies");
@@ -39,6 +39,20 @@ namespace SqlDatabase
             }
 
             conn.Close();
+            // query for displaying all the copies of the movie 
+            conn.Open();
+            Console.WriteLine("\n list of all the copies of the movie");
+            Console.WriteLine("--------------------------------------");
+
+            NpgsqlCommand cmd3 = new NpgsqlCommand("Select copy_id, title From copies Join movies On movies.movie_id = copies.movie_id", conn);
+            NpgsqlDataReader dataReader2 = cmd3.ExecuteReader();
+            while (dataReader2.Read())
+            {
+                Console.WriteLine($"copy_id : {dataReader2["copy_id"]}\"\t title : {dataReader2["title"]}");
+            }
+            conn.Close();
+
+
         }
     }
 }
