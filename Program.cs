@@ -51,6 +51,18 @@ namespace SqlDatabase
                 Console.WriteLine($"copy_id : {dataReader2["copy_id"]}\"\t title : {dataReader2["title"]}");
             }
             conn.Close();
+            // querry to display availability of the copies and names of the clients 
+            conn.Open();
+            Console.WriteLine("availability of the copies and names of the clients");
+            Console.WriteLine("---------------------------------------------------");
+            NpgsqlCommand cmd4 = new NpgsqlCommand("Select available,first_name,last_name From copies Join rentals On rentals.copy_id = copies.copy_id Join clients On clients.client_id = rentals.client_id", conn);
+            NpgsqlDataReader dataReader3 = cmd4.ExecuteReader();
+            while (dataReader3.Read())
+            {
+                Console.WriteLine($"available : {dataReader3["available"]}\"\t rentend by : {dataReader3["first_name"]}\" {dataReader3["last_name"]}");
+            }
+            conn.Close();
+
 
 
         }
