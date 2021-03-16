@@ -62,8 +62,25 @@ namespace SqlDatabase
                 Console.WriteLine($"available : {dataReader3["available"]}\"\t rentend by : {dataReader3["first_name"]}\" {dataReader3["last_name"]}");
             }
             conn.Close();
+            //querry to insert new movies
+            conn.Open();
+            Console.WriteLine("Enter the title of the movie");
+            string title = Console.ReadLine();
+            Console.WriteLine("Enter the age restriction of the movie");
+            int age =int.Parse( Console.ReadLine());
+            Console.WriteLine("Enter year of production");
+            int year = int.Parse(Console.ReadLine()); 
+            Console.WriteLine("Enter price of the movie");
+            int price = int.Parse(Console.ReadLine());
+            NpgsqlCommand cmd5 = new NpgsqlCommand("INSERT INTO movies(movie_id, title, year, age_restriction, price) VALUES(@id, @title, @year, @age, @price)", conn);
+            cmd5.Parameters.AddWithValue("@id", 120);
+            cmd5.Parameters.AddWithValue("@title", title);
+            cmd5.Parameters.AddWithValue("@year", year);
+            cmd5.Parameters.AddWithValue("@age", age);
+            cmd5.Parameters.AddWithValue("@price", price);
+            cmd5.ExecuteNonQuery();
 
-
+            conn.Close();
 
         }
     }
